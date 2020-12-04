@@ -18,13 +18,13 @@ namespace Api_MongoDB.Data.Collections
             this.Localizacao = new GeoJson2DGeographicCoordinates(longitude, latitude);
         }
 
-        
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Sexo { get; set; }
         public GeoJson2DGeographicCoordinates Localizacao { get; set; }
 
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        
     }
 }
