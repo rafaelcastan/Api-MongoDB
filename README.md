@@ -1,6 +1,6 @@
 # Api-MongoDB
 
-This application is used to access a database and make some operations:
+This is an API developed in .NET capable of accessing a database and doing some operations:
 
 - Post
 - Get
