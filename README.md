@@ -1,6 +1,6 @@
 # Api-MongoDB
 
-This is an API developed in .NET capable of accessing a database and doing some operations:
+This is an API developed in .NET that can acess a database and do some operations:
 
 - Post
 - Get
