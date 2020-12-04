@@ -15,7 +15,7 @@ namespace Api_MongoDB.Controllers
     public class InfectadoController : ControllerBase
     {
         Data.MongoDB _mongoDB;
-        IMongoCollection<Infectado>  _infectadosCollection;
+        IMongoCollection<Infectado> _infectadosCollection;
 
         public InfectadoController(Data.MongoDB mongoDB)
         {
@@ -26,8 +26,7 @@ namespace Api_MongoDB.Controllers
         [HttpPost]
         public ActionResult SalvarInfectado([FromBody] InfectadoDto dto)
         {
-            var infectado = new Infectado(dto.DataNascimento, dto.Sexo, dto.Latitude, dto.Longitude);
-
+            var infectado = new Infectado(dto.Id, dto.DataNascimento, dto.Sexo, dto.Latitude, dto.Longitude);
             _infectadosCollection.InsertOne(infectado);
 
             return StatusCode(201, "Infectado adicionado com sucesso");
@@ -39,6 +38,25 @@ namespace Api_MongoDB.Controllers
             var infectados = _infectadosCollection.Find(Builders<Infectado>.Filter.Empty).ToList();
 
             return Ok(infectados);
+        }
+
+        [HttpPut]
+        public ActionResult AtualizarInfectados([FromBody] InfectadoDto dto)
+        {
+            var infectado = new Infectado(dto.Id, dto.DataNascimento, dto.Sexo, dto.Latitude, dto.Longitude);
+            _infectadosCollection.UpdateOne(Builders<Infectado>.Filter.Where(_ => _.Id == dto.Id), Builders<Infectado>.Update
+                .Set("Sexo", dto.Sexo)
+                .Set("DataNascimento", dto.DataNascimento)
+                .Set("latidude", dto.Latitude)
+                .Set("longitude", dto.Longitude));
+            return Ok("Atualizado com Sucesso");
+        }
+
+        [HttpDelete("{Id}")]
+        public ActionResult DeletarInfectados(string Id)
+        {
+            _infectadosCollection.DeleteOne(Builders<Infectado>.Filter.Where(_ => _.Id == Id));
+            return Ok("Deletado com Sucesso");
         }
     }
 }
